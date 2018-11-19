@@ -32,6 +32,7 @@ var scene, camera, renderer, clock, deltaTime, totalTime, keyboard;
 var arToolkitSource, arToolkitContext;
 var markerNames, markerArray, currentMarkerName;
 var sceneGroup;
+	var counter;
 var amimationplan;
 initialize();
 animate();
@@ -139,6 +140,7 @@ function update()
 		if ( markerArray[i].visible )
 		{
 			anyMarkerVisible = true;
+			counter = 0;
 			markerArray[i].children[0].add( sceneGroup );
 			if ( currentMarkerName != markerNames[i] )
 			{
@@ -154,8 +156,9 @@ function update()
 			sceneGroup.quaternion.slerp(q, lerpAmount);
 			sceneGroup.scale.lerp(s, lerpAmount);
 			break;
-		} else { anyMarkerVisible = false; 
-			scene.remove( sceneGroup );
+		} else { counter++;
+			if ( counter >= 500 ){ scene.remove( sceneGroup );}
+			
 		       }
 	}
 	if ( !anyMarkerVisible )
