@@ -155,8 +155,7 @@ function update()
 			sceneGroup.scale.lerp(s, lerpAmount);
 			break;
 		} else { anyMarkerVisible = false; 
-			markerArray[i].children[0].remove( sceneGroup );
-			console.log( "No marker visible, we get rid of the video element");
+			scene.remove( sceneGroup );
 		       }
 	}
 	if ( !anyMarkerVisible )
