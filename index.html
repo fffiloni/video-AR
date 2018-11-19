@@ -47,7 +47,7 @@ function initialize()
 		alpha: true
 	});
 	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-	renderer.setSize( 800, 600 );
+	renderer.setSize( 640, 480 );
 	renderer.domElement.style.position = 'absolute'
 	renderer.domElement.style.top = '0px'
 	renderer.domElement.style.left = '0px'
@@ -112,7 +112,7 @@ function initialize()
 	////////////////////////////////////////////////////////////
 	sceneGroup = new THREE.Group();
 	let loader = new THREE.TextureLoader();
-	let geometry1 = new THREE.PlaneBufferGeometry(4.2, 6.21);
+	let geometry1 = new THREE.PlaneBufferGeometry(3, 4.4);
 	let video = document.getElementById( 'video' );
 	//ça c'est déjà dans la fonction playVideo et ça plante contrairement au script avec 1 seul marqueur
 	let texture = new THREE.VideoTexture( video );
@@ -155,6 +155,7 @@ function update()
 			sceneGroup.scale.lerp(s, lerpAmount);
 			break;
 		} else { anyMarkerVisible = false; 
+			markerArray[i].children[0].remove( sceneGroup );
 			console.log( "No marker visible, we get rid of the video element");
 		       }
 	}
