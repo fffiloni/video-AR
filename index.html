@@ -154,7 +154,9 @@ function update()
 			sceneGroup.quaternion.slerp(q, lerpAmount);
 			sceneGroup.scale.lerp(s, lerpAmount);
 			break;
-		} else { anyMarkerVisible = false; }
+		} else { anyMarkerVisible = false; 
+			console.log( "No marker visible, we get rid of the video element");
+		       }
 	}
 	if ( !anyMarkerVisible )
 	{
