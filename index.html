@@ -13,7 +13,8 @@
 	<script src="https://rawgit.com/stemkoski/AR-Examples/master/threex/threex-artoolkitsource.js"></script>
 	<script src="https://rawgit.com/stemkoski/AR-Examples/master/threex/threex-artoolkitcontext.js"></script>
 	<script src="https://rawgit.com/stemkoski/AR-Examples/master/threex/threex-arbasecontrols.js"></script>
-	<script src="https://cdn.jsdelivr.net/gh/fffiloni/AR-video/threex/threex-armarkercontrols.js"></script>
+	<script src="https://rawgit.com/stemkoski/AR-Examples/master/threex/threex-armarkercontrols.js"></script>
+	<script src="https://rawgit.com/stemkoski/AR-Examples/master/threex/threex-arsmoothedcontrols.js"></script>
 </head>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
@@ -29,7 +30,7 @@
 
 <script>
 var scene, camera, renderer, clock, deltaTime, totalTime, keyboard;
-var arToolkitSource, arToolkitContext;
+var arToolkitSource, arToolkitContext, smoothedControls;
 var markerNames, markerArray, currentMarkerName;
 var sceneGroup;
 var amimationplan;
@@ -111,10 +112,23 @@ function initialize()
 		let markerControls = new THREEx.ArMarkerControls(arToolkitContext, marker, {
 			type: 'pattern', patternUrl: "markers/" + markerNames[i] + ".patt",
 		});
+		
+		// interpolates from last position to create smoother transitions when moving.
+		// parameter lerp values near 0 are slow, near 1 are fast (instantaneous).
+	
+		smoothedControls = new THREEx.ArSmoothedControls(marker, {
+		lerpPosition: 0.8,
+		lerpQuaternion: 0.8,
+		lerpScale: 1,
+		// minVisibleDelay: 1,
+		// minUnvisibleDelay: 1,
+	});
 
 		let markerGroup = new THREE.Group();
 		marker.add(markerGroup);
 	}
+	
+	
 
 	////////////////////////////////////////////////////////////
 	// setup scene
@@ -203,6 +217,9 @@ function update()
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
+	// additional code for smoothed controls
+	smoothedControls.update(marker);
+
 }
 function render()
 {
