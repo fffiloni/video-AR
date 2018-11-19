@@ -154,7 +154,7 @@ function update()
 			sceneGroup.quaternion.slerp(q, lerpAmount);
 			sceneGroup.scale.lerp(s, lerpAmount);
 			break;
-		}
+		} else { anyMarkerVisible = false; }
 	}
 	if ( !anyMarkerVisible )
 	{
